@@ -10,9 +10,6 @@ ImageData::ImageData(int num, int row, int col)
     dimension = row*col;
     g = -1;
 
-    //initialize image
-    int count=0;
-
     //image set later
 }
 

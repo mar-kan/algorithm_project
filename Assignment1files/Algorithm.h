@@ -16,7 +16,7 @@ class Algorithm {
 
 public:
     Algorithm(int);
-    ~Algorithm() {};
+    virtual ~Algorithm() = default;
 
     void executeAlgorithm(Dataset*);
     void initialization(int);

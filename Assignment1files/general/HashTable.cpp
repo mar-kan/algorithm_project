@@ -90,7 +90,7 @@ int HashTable::AssignInTableCluster(ImageData *image)
     /** assigns image to centroid with min l1 distance **/
 
     int min_dist = 100000;
-    int pos, dist;
+    int pos=0, dist;
     for (int i=0; i<size; i++)
     {
         if ((dist = table[i]->getMyCentroid()->getCentroid() - image->getImage()) < min_dist)
@@ -122,7 +122,7 @@ void HashTable::BucketNNSearch(map<float, ImageData*> *images_found, ImageData *
             continue;
 
         float distance = calculateManhattanDistance(query_img, *it);
-        if (images_found->size() == N)                              //if list 'full'
+        if (images_found->size() == (float)N)                              //if list 'full'
         {
             if (distance < k_distance)                              //deletes last element if this distance is better
                 images_found->erase(N); //erases last element of map

@@ -4,7 +4,10 @@ from ortools.linear_solver import pywraplp
 import numpy as np
 from scipy.spatial.distance import cdist
 
+from ctypes import cdll
+sys.path.insert(0, '../')
 from A.loadDataset import *
+
 
 
 def emd(a, b):
@@ -70,11 +73,7 @@ def main():
     trainLabels = loadLabelSet(trainLabel)
     testLabels = loadLabelSet(testLabel)
 
-
-    # reading labelsets
-
-
-
+    lib = cdll.LoadLibrary('../searchLib.so')
 
     # emd()
 

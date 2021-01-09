@@ -1,7 +1,7 @@
 CC=g++
 CFLAGS=-Wall -std=c++11 -O3 -g3 -pg -std=c++0x
 
-all: search search.so
+all: search searchLib.so
 
 search: B/lshMain.o B/LSH.o B/lshMainUtils.o B/LSHashFunction.o B/NearestNeighbour.o general/HashTable.o general/Dataset.o general/distance.o general/functions.o general/ImageData.o D/Algorithm.o B/Hypercube.o D/Centroid.o B/CubeHashFunction.o
 	$(CC) -o lsh lshMain.o LSH.o lshMainUtils.o LSHashFunction.o NearestNeighbour.o HashTable.o Dataset.o distance.o functions.o ImageData.o Algorithm.o Hypercube.o Centroid.o CubeHashFunction.o $(CFLAGS)
@@ -71,14 +71,9 @@ general/ImageData.o: Assignment1files/general/ImageData.cpp
 
 
 
-# create static libraries for python
-search.so: LSH.o lshMainUtils.o LSHashFunction.o NearestNeighbour.o HashTable.o Dataset.o distance.o functions.o ImageData.o Algorithm.o Hypercube.o Centroid.o CubeHashFunction.o
-	$(CC) Assignment1files/LSH.cpp B/lshMainUtils.cpp Assignment1files/LSHashFunction.cpp Assignment1files/NearestNeighbour.cpp Assignment1files/general/HashTable.cpp Assignment1files/general/Dataset.cpp Assignment1files/general/distance.cpp Assignment1files/general/functions.cpp Assignment1files/general/ImageData.cpp Assignment1files/Algorithm.cpp Assignment1files/Hypercube.cpp Assignment1files/Centroid.cpp Assignment1files/CubeHashFunction.cpp -o search.so -fPIC -shared
-
-
-#g++ -c -fPIC foo.cpp -o foo.o
-#g++ -shared -Wl,-soname,libfoo.so -o libfoo.so  foo.o
-
+# create shared library for python
+searchLib.so: LSH.o lshMainUtils.o LSHashFunction.o NearestNeighbour.o HashTable.o Dataset.o distance.o functions.o ImageData.o Algorithm.o Hypercube.o Centroid.o CubeHashFunction.o
+	$(CC) Assignment1files/LSH.cpp B/lshMainUtils.cpp Assignment1files/LSHashFunction.cpp Assignment1files/NearestNeighbour.cpp Assignment1files/general/HashTable.cpp Assignment1files/general/Dataset.cpp Assignment1files/general/distance.cpp Assignment1files/general/functions.cpp Assignment1files/general/ImageData.cpp Assignment1files/Algorithm.cpp Assignment1files/Hypercube.cpp Assignment1files/Centroid.cpp Assignment1files/CubeHashFunction.cpp -o searchLib.so -fPIC -shared
 
 .PHONY: clean
 

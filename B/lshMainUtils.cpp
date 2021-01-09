@@ -56,14 +56,12 @@ void checkArguments(LSH *lshT, LSH * lshN, int argc, char* argv[])              
 
 void writeOutputQuery(LSH *lshN, LSH* lshT, NearestNeighbour *nnN, NearestNeighbour *nnT, ImageData * q_im)    //creates and writes a query in the output file
 {
-    FILE * fp = fopen((lshT->getOutputFile()).c_str(), "r+");                     //opens output file for writing
+    FILE * fp = fopen((lshT->getOutputFile()).c_str(), "a");                     //opens output file for writing
     if (!fp)
         fp = fopen(lshT->getOutputFile().c_str(), "w");
 
     //writes info for one query
     fprintf(fp, "Query: %d\n", q_im->getImageNumber());
-
-    int i=0;
     fprintf(fp, "Nearest neighbor Reduced: %d\n", nnN->getNnResults()->begin()->second->getImageNumber());
     fprintf(fp, "Nearest neighbor LSH: %d\n", nnT->getNnResults()->begin()->second->getImageNumber());
     fprintf(fp, "Nearest neighbor True: %d\n", nnT->getNnResults()->begin()->second->getImageNumber());
@@ -77,9 +75,9 @@ void writeOutputQuery(LSH *lshN, LSH* lshT, NearestNeighbour *nnN, NearestNeighb
 
 void writeOutputInfo(LSH * lsh, float tReduced, float tLSH, float tTrue, float afLSH, float afReduced) //prints rest data in output file
 {
-    FILE * fp = fopen((lsh->getOutputFile()).c_str(), "r+");                     //opens output file for writing
+    FILE * fp = fopen((lsh->getOutputFile()).c_str(), "a");                     //opens output file for writing
 
-    fprintf(fp, "tReduced: %f\n", tReduced);
+    fprintf(fp, "\ntReduced: %f\n", tReduced);
     fprintf(fp, "tLSH: %f\n",tLSH);
     fprintf(fp, "tTrue: %f\n", tTrue);
     fprintf(fp, "Approximation Factor LSH: %f\n",afLSH);
@@ -222,9 +220,21 @@ void readQueryFile(LSH * lsh, Dataset * dataset, string type)                   
         {
             for(int c=0;c<dataset->getColumns();c++)
             {
-                unsigned char temp;
-                in.read((char*)&temp,sizeof(temp));
-                img->setImageBit(temp, count++);
+                if (type == "true")
+                {
+                    unsigned char temp;
+                    in.read((char*)&temp,sizeof(temp));
+                    img->setImageBit(temp, count++);
+                }
+                else
+                {
+                    /** gets now 2 bits for each number **/
+                    unsigned char temp1, temp2;
+                    in.read((char*)&temp1,sizeof(temp1));
+                    img->setImageBit(temp1, count++);
+                    in.read((char*)&temp2,sizeof(temp2));
+                    img->setImageBit(temp2, count++);
+                }
             }
         }
 

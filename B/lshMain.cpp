@@ -64,26 +64,26 @@ int main(int argc, char * argv[])
         readQueryFile(lshTrue, datasetTrue, "true");
         readQueryFile(lshNew, datasetNew, "new");
 
-        float tTrue, tReduced, tLSH, distLSH = 0.0, distReduced = 0.0;
+        float tTrue=0.0, tReduced=0.0, tLSH=0.0, distLSH=0.0, distReduced=0.0;
 
-        //for (int i=0; i<dataset->getQueryCount(); i++)  //for each query image
+        for (int i=0; i<datasetTrue->getQueryCount(); i++)  //for each query image
         {
-            cout << "Processing query-"<< 0 << endl;
+            cout << "Processing query-"<< i++ << endl;
 
             /** executes all algorithms **/
             auto * nnNew = new NearestNeighbour(lshNew->getN());
             auto * nnTrue = new NearestNeighbour(lshTrue->getN());
 
             cout << "Executing Approximate Nearest Neighbour Reduced" << endl;
-            nnNew->ApproximateNNN(lshNew, "LSH", datasetNew->getQueryImagePos(0));
+            nnNew->ApproximateNNN(lshNew, "LSH", datasetNew->getQueryImagePos(i));
 
             cout << "Executing Approximate Nearest Neighbour True" << endl;
-            nnTrue->ApproximateNNN(lshTrue, "LSH", datasetTrue->getQueryImagePos(0));
+            nnTrue->ApproximateNNN(lshTrue, "LSH", datasetTrue->getQueryImagePos(i));
 
             cout << "Executing Exact Nearest Neighbour" << endl<<endl;
-            nnTrue->ExactNNN(lshTrue, "LSH", datasetTrue->getQueryImagePos(0), datasetTrue);
+            nnTrue->ExactNNN(lshTrue, "LSH", datasetTrue->getQueryImagePos(i), datasetTrue);
 
-            writeOutputQuery(lshNew,lshTrue, nnNew, nnTrue, datasetTrue->getQueryImagePos(0)); //writes output file
+            writeOutputQuery(lshNew,lshTrue, nnNew, nnTrue, datasetTrue->getQueryImagePos(i)); //writes output file
 
             tReduced = nnNew->getSecsAnn();
             tLSH = nnTrue->getSecsAnn();
@@ -109,7 +109,7 @@ int main(int argc, char * argv[])
     }while (answer == "yes" || answer == "y");              //repeats while the user inputs 'yes' or 'y'
 
     delete lshTrue;
-    delete lshNew;
+    //delete lshNew;
     cout << endl << "Exiting" << endl;
     exit(0);
 }
