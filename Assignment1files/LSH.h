@@ -1,8 +1,8 @@
 //Kanellaki Maria-Anna - 1115201400060
 //Litsas Nikolaos - 1115201400331
 
-#ifndef HYPERCUBE_H
-#define HYPERCUBE_H
+#ifndef LSH_H
+#define LSH_H
 
 #include <cstdio>
 #include <cstdio>
@@ -11,33 +11,37 @@
 #include <fstream>
 #include <cassert>
 #include <cstring>
-#include "../general/HashTable.h"
-#include "../D/Algorithm.h"
-#include "CubeHashFunction.h"
+#include <map>
+#include "general/HashTable.h"
+#include "Algorithm.h"
+#include "LSHashFunction.h"
+#include "general/functions.h"
 
 using namespace std;
 
-class Hypercube: public Algorithm  {
+class LSH: public Algorithm {                       //class stores all inputs and values needed for the LSH algorithm to run and the hash tables
 
+    //all values inputed by user
     string input_file, query_file, output_file;
-    int k, M, N, probes;
-    float R, w;
+    int k, L, N, w;
+    float R;
 
-    int num_clusters; //B
+    HashTable ** hashTables;                        //array that contains all L hash tables
+    LSHashFunction **hashFamily;                    //array that contains all hash functions
 
-    HashTable * hashTable;
-    CubeHashFunction **hashFamily;                    //array that contains all hash functions
+    int num_clusters; //qB
 
 public:
-    Hypercube();        //constructor for question A
-    Hypercube(int);     //constructor for qB
-    ~Hypercube();
+    LSH();     //constructor for question A
+    LSH(int);  //constructor for question B
+    ~LSH();
 
+    void reinitializeTableArray();
     void reinitializeFamilyArray();
-    void initializeHashFamily(int);
 
-    void initializeHashTable(int);
-    void insertInHashTable(Dataset*);
+    void initializeHashFamily(int);
+    void initializeHashTables(int);
+    void insertToAllHashTables(Dataset*);
 
     void FindNNN(map<float, ImageData*> *, ImageData*);
     void RangeSearch(map<float, ImageData*> *, ImageData*);
@@ -50,20 +54,18 @@ public:
     void setQueryFile(const string &queryFile);
     void setR(float r);
     void setN(int n);
-    void setM(int m);
+    void setL(int l);
     void setK(int k);
-    void setProbes(int probes);
-    void setW(float W);
+    void setW(int W);
 
     const string &getInputFile() const;
     const string &getOutputFile() const;
     const string &getQueryFile() const;
     float getR() const;
     int getN() const;
-    int getM() const;
+    int getL() const;
     int getK() const;
-    int getProbes() const;
-    float getW() const;
+    int getW() const;
 };
 
 

@@ -1,11 +1,11 @@
 //Kanellaki Maria-Anna - 1115201400060
 //Litsas Nikolaos - 1115201400331
 
-#include "../general/HashTable.h"
+#include "general/HashTable.h"
 #include "clusterMainUtils.h"
 #include "Cluster.h"
-#include "../B/LSH.h"
-#include "../B/Hypercube.h"
+#include "LSH.h"
+#include "Hypercube.h"
 #include "Lloyds.h"
 
 using namespace std;

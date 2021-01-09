@@ -4,9 +4,9 @@
 #ifndef PROJECT_SILHOUETTE_H
 #define PROJECT_SILHOUETTE_H
 
-#include "../general/HashTable.h"
-#include "../general/distance.h"
-#include "../general/ImageData.h"
+#include "general/HashTable.h"
+#include "general/distance.h"
+#include "general/ImageData.h"
 
 
 class Silhouette {
@@ -20,4 +20,4 @@ public:
 };
 
 
-#endif //PROJECT_SILHOUETTE_H
+#endif

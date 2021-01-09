@@ -8,7 +8,7 @@
 
 #include <string>
 #include <random>
-#include "../D/Algorithm.h"
+#include "../Algorithm.h"
 
 using namespace std;
 

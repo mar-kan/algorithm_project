@@ -14,19 +14,20 @@
 #include <string>
 #include <cerrno>
 #include <bitset>
-#include "LSH.h"
-#include "../general/Dataset.h"
-#include "../general/functions.h"
-#include "NearestNeighbour.h"
+#include "../Assignment1files/LSH.h"
+#include "../Assignment1files/general/Dataset.h"
+#include "../Assignment1files/general/functions.h"
+#include "../Assignment1files/NearestNeighbour.h"
 using namespace std;
 
 
 void checkArguments(LSH *, LSH*, int, char*[]);
-void writeOutputQuery(LSH *, NearestNeighbour *, ImageData*, string);
 void clearFileNames(LSH *);
 void inputFileName(LSH *, string);
 void readInputFile(LSH *, Dataset *, string);
 void readQueryFile(LSH *, Dataset *, string);
+
+void writeOutputQuery(LSH *, LSH*, NearestNeighbour *, NearestNeighbour*, ImageData*);
 void writeOutputInfo(LSH * lsh, float tReduced, float tLSH, float tTrue, float afLSH, float afReduced);
 
 #endif

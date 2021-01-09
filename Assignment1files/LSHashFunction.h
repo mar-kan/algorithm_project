@@ -6,8 +6,8 @@
 
 #include <random>
 #include <vector>
-#include "../general/ImageData.h"
-#include "../general/functions.h"
+#include "general/ImageData.h"
+#include "general/functions.h"
 using namespace std;
 
 class LSHashFunction {

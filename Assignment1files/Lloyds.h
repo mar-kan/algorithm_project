@@ -6,7 +6,7 @@
 
 #include "Algorithm.h"
 #include "Centroid.h"
-#include "../general/functions.h"
+#include "general/functions.h"
 
 class Lloyds: public Algorithm {
 

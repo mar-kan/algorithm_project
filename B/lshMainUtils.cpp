@@ -54,36 +54,30 @@ void checkArguments(LSH *lshT, LSH * lshN, int argc, char* argv[])              
 }
 
 
-void writeOutputQuery(LSH *lsh, NearestNeighbour *nn, ImageData * q_im, string type)    //creates and writes a query in the output file
+void writeOutputQuery(LSH *lshN, LSH* lshT, NearestNeighbour *nnN, NearestNeighbour *nnT, ImageData * q_im)    //creates and writes a query in the output file
 {
-    FILE * fp = fopen((lsh->getOutputFile()).c_str(), "w");                     //opens output file for writing
+    FILE * fp = fopen((lshT->getOutputFile()).c_str(), "r+");                     //opens output file for writing
+    if (!fp)
+        fp = fopen(lshT->getOutputFile().c_str(), "w");
 
     //writes info for one query
     fprintf(fp, "Query: %d\n", q_im->getImageNumber());
 
     int i=0;
-    if (type == "new")
-        fprintf(fp, "Nearest neighbor Reduced: %d\n", nn->getNnResults()->begin()->second->getImageNumber());
-    else
-    {
-        fprintf(fp, "Nearest neighbor LSH: %d\n", nn->getNnResults()->begin()->second->getImageNumber());
-        fprintf(fp, "Nearest neighbor True: %d\n", nn->getNnResults()->begin()->second->getImageNumber());
-    }
+    fprintf(fp, "Nearest neighbor Reduced: %d\n", nnN->getNnResults()->begin()->second->getImageNumber());
+    fprintf(fp, "Nearest neighbor LSH: %d\n", nnT->getNnResults()->begin()->second->getImageNumber());
+    fprintf(fp, "Nearest neighbor True: %d\n", nnT->getNnResults()->begin()->second->getImageNumber());
+    fprintf(fp, "distanceReduced: %f\n", nnN->getNnResults()->begin()->first);
+    fprintf(fp, "distanceLSH: %f\n", nnT->getNnResults()->begin()->first);
+    fprintf(fp, "distanceTrue: %f\n", nnT->getRealResults()->begin()->first);
 
-    if (type == "new")
-        fprintf(fp, "distanceReduced: %f\n", nn->getNnResults()->begin()->first);
-    else
-    {
-        fprintf(fp, "distanceLSH: %f\n", nn->getNnResults()->begin()->first);
-        fprintf(fp, "distanceTrue: %f\n", nn->getRealResults()->begin()->first);
-    }
     fclose(fp);
 }
 
 
 void writeOutputInfo(LSH * lsh, float tReduced, float tLSH, float tTrue, float afLSH, float afReduced) //prints rest data in output file
 {
-    FILE * fp = fopen((lsh->getOutputFile()).c_str(), "w");                     //opens output file for writing
+    FILE * fp = fopen((lsh->getOutputFile()).c_str(), "r+");                     //opens output file for writing
 
     fprintf(fp, "tReduced: %f\n", tReduced);
     fprintf(fp, "tLSH: %f\n",tLSH);

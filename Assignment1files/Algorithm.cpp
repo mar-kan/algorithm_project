@@ -3,8 +3,8 @@
 
 #include "Algorithm.h"
 #include "clusterMainUtils.h"
-#include "../B/LSH.h"
-#include "../B/Hypercube.h"
+#include "LSH.h"
+#include "Hypercube.h"
 #include "Lloyds.h"
 
 

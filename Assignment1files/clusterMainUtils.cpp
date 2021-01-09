@@ -5,8 +5,8 @@
 #include "clusterMainUtils.h"
 #include "Cluster.h"
 #include "Lloyds.h"
-#include "../B/LSH.h"
-#include "../B/Hypercube.h"
+#include "LSH.h"
+#include "Hypercube.h"
 
 
 void checkArguments(Cluster *cluster, int argc, char* argv[])                                   //checks program's command line arguments

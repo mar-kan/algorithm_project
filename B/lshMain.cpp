@@ -1,10 +1,10 @@
 //Kanellaki Maria-Anna - 1115201400060
 //Litsas Nikolaos - 1115201400331
 
-#include "../general/HashTable.h"
-#include "LSH.h"
+#include "../Assignment1files/general/HashTable.h"
+#include "../Assignment1files/LSH.h"
 #include "lshMainUtils.h"
-#include "../general/Dataset.h"
+#include "../Assignment1files//general/Dataset.h"
 
 int main(int argc, char * argv[])
 {
@@ -66,54 +66,35 @@ int main(int argc, char * argv[])
 
         float tTrue, tReduced, tLSH, distLSH = 0.0, distReduced = 0.0;
 
-        cout << "Processing new dimension" << endl;
         //for (int i=0; i<dataset->getQueryCount(); i++)  //for each query image
         {
             cout << "Processing query-"<< 0 << endl;
 
             /** executes all algorithms **/
-            auto * nn = new NearestNeighbour(lshNew->getN());
+            auto * nnNew = new NearestNeighbour(lshNew->getN());
+            auto * nnTrue = new NearestNeighbour(lshTrue->getN());
 
-            cout << "Executing Approximate Nearest Neighbour" << endl;
-            nn->ApproximateNNN(lshNew, "LSH", datasetNew->getQueryImagePos(0));
+            cout << "Executing Approximate Nearest Neighbour Reduced" << endl;
+            nnNew->ApproximateNNN(lshNew, "LSH", datasetNew->getQueryImagePos(0));
 
-            /*cout << "Executing Range Search" << endl;
-            nn->RangeSearch(lsh, "LSH", dataset->getQueryImagePos(0));*/
-
-            /*cout << "Executing Exact Nearest Neighbour" << endl<<endl;
-            nn->ExactNNN(lshNew, "LSH", datasetNew->getQueryImagePos(0), datasetNew);*/
-
-            writeOutputQuery(lshNew, nn, datasetNew->getQueryImagePos(0), "new"); //writes output file
-
-            tReduced = nn->getSecsAnn();
-            distReduced += nn->getNnResults()->begin()->first;
-            delete nn;
-        }
-
-        cout << "Processing true dimension" << endl;
-        //for (int i=0; i<dataset->getQueryCount(); i++)  //for each query image
-        {
-            cout << "Processing query-"<< 0 << endl;
-
-            /** executes all algorithms **/
-            auto * nn = new NearestNeighbour(lshTrue->getN());
-
-            cout << "Executing Approximate Nearest Neighbour" << endl;
-            nn->ApproximateNNN(lshTrue, "LSH", datasetTrue->getQueryImagePos(0));
-
-            /*cout << "Executing Range Search" << endl;
-            nn->RangeSearch(lsh, "LSH", dataset->getQueryImagePos(0));*/
+            cout << "Executing Approximate Nearest Neighbour True" << endl;
+            nnTrue->ApproximateNNN(lshTrue, "LSH", datasetTrue->getQueryImagePos(0));
 
             cout << "Executing Exact Nearest Neighbour" << endl<<endl;
-            nn->ExactNNN(lshTrue, "LSH", datasetTrue->getQueryImagePos(0), datasetTrue);
+            nnTrue->ExactNNN(lshTrue, "LSH", datasetTrue->getQueryImagePos(0), datasetTrue);
 
-            writeOutputQuery(lshTrue, nn, datasetTrue->getQueryImagePos(0), "true"); //writes output file
+            writeOutputQuery(lshNew,lshTrue, nnNew, nnTrue, datasetTrue->getQueryImagePos(0)); //writes output file
 
-            tLSH = nn->getSecsAnn();
-            tTrue = nn->getSecsReal();
-            distLSH += nn->getNnResults()->begin()->first;
-            delete nn;
+            tReduced = nnNew->getSecsAnn();
+            tLSH = nnTrue->getSecsAnn();
+            tTrue = nnTrue->getSecsReal();
+            distLSH += nnTrue->getNnResults()->begin()->first;
+            distReduced += nnNew->getNnResults()->begin()->first;
+
+            delete nnNew;
+            delete nnTrue;
         }
+
         float afLSH = distLSH; // / (float)datasetTrue->getQueryCount();
         float afReduced = distReduced;// / (float)datasetNew->getQueryCount();
         writeOutputInfo(lshTrue, tReduced, tLSH, tTrue, afLSH, afReduced);

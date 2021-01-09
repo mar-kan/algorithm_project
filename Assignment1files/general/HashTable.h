@@ -10,7 +10,7 @@
 #include <list>
 #include "../general/ImageData.h"
 #include "distance.h"
-#include "../D/Centroid.h"
+#include "../Centroid.h"
 
 using namespace std;
 

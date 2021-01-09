@@ -5,7 +5,7 @@
 #define NEARESTNEIGHBOUR_H
 
 #include <map>
-#include "../general/ImageData.h"
+#include "general/ImageData.h"
 #include "LSH.h"
 #include "Hypercube.h"
 

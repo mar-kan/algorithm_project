@@ -15,8 +15,8 @@
 #include <cerrno>
 #include <bitset>
 #include "Cluster.h"
-#include "../general/Dataset.h"
-#include "../general/functions.h"
+#include "general/Dataset.h"
+#include "general/functions.h"
 using namespace std;
 
 

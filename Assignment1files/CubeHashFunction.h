@@ -7,8 +7,8 @@
 #include <random>
 #include <vector>
 #include <map>
-#include "../general/ImageData.h"
-#include "../general/functions.h"
+#include "general/ImageData.h"
+#include "general/functions.h"
 #include "LSHashFunction.h"
 
 using namespace std;

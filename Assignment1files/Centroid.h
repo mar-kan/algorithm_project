@@ -6,7 +6,7 @@
 
 #include <list>
 #include <cstdio>
-#include "../general/ImageData.h"
+#include "general/ImageData.h"
 using namespace std;
 
 

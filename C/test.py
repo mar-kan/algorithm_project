@@ -1,57 +1,82 @@
+import sys
 import scipy
 from ortools.linear_solver import pywraplp
 import numpy as np
 from scipy.spatial.distance import cdist
 
+from A.loadDataset import *
 
-def emd(X, Y, X_weights=None, Y_weights=None, distance='euclidean',
-        D=None, return_flows=False):
-    """
-    Computes the EMD between two weighted samples
-    @param X : First sample
-    @param Y : Second sample
-    @param X_weights : weights of elements in X (must sum to 1);
-        if None, 1/|X| is used as the weight of each element
-    @param Y_weights : weights of elements in Y (must sum to 1);
-        if None, 1/|Y| is used as the weight of each element
-    @param distance : valid distance type used by scipy.spatial.distance.cdist,
-        or "precomputed" if the pairwise distances D is supplied
-    @param D : precomputed distance matrix; ignored unless distance="precomputed";
-        must be array of size |X|-by-|Y|
-    @param return_flows : whether to return the flows between cells in addition
-        to the distance (default False)
-    """
-    if distance != 'precomputed':
-        n = len(X)
-        m = len(Y)
-        D = cdist(X, Y, distance)
-        if X_weights is None:
-            X_weights = np.ones(n) / n
-        elif n != len(X_weights):
-            raise ValueError('Size mismatch of X and X_weights')
-        if Y_weights is None:
-            Y_weights = np.ones(m) / m
-        elif m != len(Y_weights):
-            raise ValueError('Size mismatch of Y and Y_weights')
 
-    else:
-        if D is None:
-            raise ValueError("D must be supplied when distance='precomputed'")
-        n, m = D.shape
-        if X_weights is None:
-            X_weights = np.ones(n) / n
-        elif n != len(X_weights):
-            raise ValueError('Size mismatch of D and X_weights')
-        if Y_weights is None:
-            Y_weights = np.ones(m) / m
-        elif m != len(Y_weights):
-            raise ValueError('Size mismatch of D and Y_weights')
+def emd(a, b):
+    earth = 0
+    earth1 = 0
+    diff = 0
+    s = len(a)
+    su = []
+    diff_array = []
+    for i in range(0, s):
+        diff = a[i] - b[i]
+        diff_array.append(diff)
+        diff = 0
+    for j in range(0, s):
+        earth = (earth + diff_array[j])
+        earth1 = abs(earth)
+        su.append(earth1)
+    emd_output = sum(su) / (s - 1)
+    print(emd_output)
 
-    return _emd(X_weights, Y_weights, D, return_flows)
+
+def checkArguments():
+    if len(sys.argv) < 10:
+        print('Too few arguments')
+        exit(-1)
+
+    flag = False
+
+    trainSet = ''
+    testSet = ''
+    trainLabels = ''
+    testLabels = ''
+
+    for i in range(1, len(sys.argv), 2):
+        if sys.argv[i] == '-d':
+            trainSet = sys.argv[i + 1]
+        elif sys.argv[i] == '-q':
+            testSet = sys.argv[i + 1]
+        elif sys.argv[i] == '-l1':
+            trainLabels = sys.argv[i + 1]
+        elif sys.argv[i] == '-l2':
+            testLabels = sys.argv[i + 1]
+        elif sys.argv[i] == '-EMD':
+            flag = True
+        else:
+            print('Wrong arguments' + sys.argv[i])
+            exit(-1)
+
+    if not flag:
+        print('Wrong arguments')
+        exit(-1)
+
+    return trainSet, testSet, trainLabels, testLabels
 
 
 def main():
-    emd()
+    trainset, testset, trainLabel, testLabel = checkArguments()
+
+    # reading datasets and label sets
+    trainSet, numOfTrainImages = loadDataset(trainset)
+    testSet, numOfTestImages = loadDataset(testset)
+
+    trainLabels = loadLabelSet(trainLabel)
+    testLabels = loadLabelSet(testLabel)
+
+
+    # reading labelsets
+
+
+
+
+    # emd()
 
     # scipy.optimize.linprog()
 

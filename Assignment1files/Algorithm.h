@@ -5,8 +5,8 @@
 #define ALGORITHM_H
 
 
-#include "../general/HashTable.h"
-#include "../general/Dataset.h"
+#include "general/HashTable.h"
+#include "general/Dataset.h"
 #include "Centroid.h"
 
 class Algorithm {
