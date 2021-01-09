@@ -66,21 +66,22 @@ int main(int argc, char * argv[])
 
         float tTrue=0.0, tReduced=0.0, tLSH=0.0, distLSH=0.0, distReduced=0.0;
 
+        cout << "executing algorithms" << endl;
         for (int i=0; i<datasetTrue->getQueryCount(); i++)  //for each query image
         {
-            cout << "Processing query-"<< i++ << endl;
+            //cout << "Processing query-"<< i << endl;
 
             /** executes all algorithms **/
             auto * nnNew = new NearestNeighbour(lshNew->getN());
             auto * nnTrue = new NearestNeighbour(lshTrue->getN());
 
-            cout << "Executing Approximate Nearest Neighbour Reduced" << endl;
+            //cout << "Executing Approximate Nearest Neighbour Reduced" << endl;
             nnNew->ApproximateNNN(lshNew, "LSH", datasetNew->getQueryImagePos(i));
 
-            cout << "Executing Approximate Nearest Neighbour True" << endl;
+            //cout << "Executing Approximate Nearest Neighbour True" << endl;
             nnTrue->ApproximateNNN(lshTrue, "LSH", datasetTrue->getQueryImagePos(i));
 
-            cout << "Executing Exact Nearest Neighbour" << endl<<endl;
+            //cout << "Executing Exact Nearest Neighbour" << endl<<endl;
             nnTrue->ExactNNN(lshTrue, "LSH", datasetTrue->getQueryImagePos(i), datasetTrue);
 
             writeOutputQuery(lshNew,lshTrue, nnNew, nnTrue, datasetTrue->getQueryImagePos(i)); //writes output file

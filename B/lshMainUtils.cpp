@@ -145,7 +145,10 @@ void readInputFile(LSH * lsh, Dataset * dataset, string type)                   
     {
         //initializes new object for image
         auto * img = new ImageData(i, dataset->getRows(), dataset->getColumns());
-
+        /*if (type == "new")
+            img = new ImageData(i, dataset->getRows()*2, dataset->getColumns());    //2 bits for each image
+        else
+            img = new ImageData(i, dataset->getRows(), dataset->getColumns());*/
         int count=0;
         //initialize array to store image to read
         for(int r=0;r<dataset->getRows();r++)
