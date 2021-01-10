@@ -57,8 +57,6 @@ void checkArguments(LSH *lshT, LSH * lshN, int argc, char* argv[])              
 void writeOutputQuery(LSH *lshN, LSH* lshT, NearestNeighbour *nnN, NearestNeighbour *nnT, ImageData * q_im)    //creates and writes a query in the output file
 {
     FILE * fp = fopen((lshT->getOutputFile()).c_str(), "a");                     //opens output file for writing
-    if (!fp)
-        fp = fopen(lshT->getOutputFile().c_str(), "w");
 
     //writes info for one query
     fprintf(fp, "Query: %d\n", q_im->getImageNumber());
@@ -143,14 +141,8 @@ void readInputFile(LSH * lsh, Dataset * dataset, string type)                   
     //reads and creates an object for every image
     for(int i=0;i<dataset->getNumOfImgs();i++)
     {
-        //initializes new object for image
-        auto * img = new ImageData(i, dataset->getRows(), dataset->getColumns());
-        /*if (type == "new")
-            img = new ImageData(i, dataset->getRows()*2, dataset->getColumns());    //2 bits for each image
-        else
-            img = new ImageData(i, dataset->getRows(), dataset->getColumns());*/
         int count=0;
-        //initialize array to store image to read
+        unsigned char img[dataset->getRows()*dataset->getColumns()];
         for(int r=0;r<dataset->getRows();r++)
         {
             for(int c=0;c<dataset->getColumns();c++)
@@ -159,21 +151,23 @@ void readInputFile(LSH * lsh, Dataset * dataset, string type)                   
                 {
                     unsigned char temp;
                     in.read((char*)&temp,sizeof(temp));
-                    img->setImageBit(temp, count++);
+                    img[count++] = temp;//->setImageBit(temp, count++);
                 }
                 else
                 {
                     /** gets now 2 bits for each number **/
                     unsigned char temp1, temp2;
                     in.read((char*)&temp1,sizeof(temp1));
-                    img->setImageBit(temp1, count++);
+                    img[count++] = temp1;//->setImageBit(temp1, count++);
                     in.read((char*)&temp2,sizeof(temp2));
-                    img->setImageBit(temp2, count++);
+                    img[count++] = temp2;//->setImageBit(temp2, count++);
                 }
             }
         }
         //inserts image in dataset image list
-        dataset->insertImage(img);
+        string im = reinterpret_cast<char*>(img);
+        auto * image = new ImageData(im, i, dataset->getRows(), dataset->getColumns());
+        dataset->insertImage(image);
     }
 
     //checks if file was read successfully
@@ -215,7 +209,7 @@ void readQueryFile(LSH * lsh, Dataset * dataset, string type)                   
     for(int i=0;i<dataset->getNumOfImgs();i++)
     {
         //initializes new object for image
-        auto * img = new ImageData(i, dataset->getRows(), dataset->getColumns());
+        auto * img = new ImageData("",i, dataset->getRows(), dataset->getColumns());
 
         int count=0;
         //initialize array to store image to read

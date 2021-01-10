@@ -66,8 +66,12 @@ int main(int argc, char * argv[])
 
         float tTrue=0.0, tReduced=0.0, tLSH=0.0, distLSH=0.0, distReduced=0.0;
 
-        cout << "executing algorithms" << endl;
-        for (int i=0; i<datasetTrue->getQueryCount(); i++)  //for each query image
+        //creates / overwrites output file
+        FILE * fp = fopen(lshTrue->getOutputFile().c_str(), "w");
+        fclose(fp);
+
+        cout << "Executing algorithms" << endl;
+        for (int i=0; i<datasetNew->getQueryCount(); i++)  //for each query image
         {
             //cout << "Processing query-"<< i << endl;
 
@@ -96,8 +100,8 @@ int main(int argc, char * argv[])
             delete nnTrue;
         }
 
-        float afLSH = distLSH; // / (float)datasetTrue->getQueryCount();
-        float afReduced = distReduced;// / (float)datasetNew->getQueryCount();
+        float afLSH = distLSH / (float)datasetTrue->getQueryCount();
+        float afReduced = distReduced / (float)datasetNew->getQueryCount();
         writeOutputInfo(lshTrue, tReduced, tLSH, tTrue, afLSH, afReduced);
 
         clearFileNames(lshTrue);                                //erases all file names to input new ones in each iteration

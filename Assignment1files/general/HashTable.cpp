@@ -15,7 +15,7 @@ Bucket::~Bucket()                                               //deletes bucket
 {
     list<ImageData*>::iterator it;
     for (it=bucketList->begin(); it!=bucketList->end(); it++)
-        delete (*it);
+        delete ((*it));
 
     delete bucketList;
     delete myCentroid;

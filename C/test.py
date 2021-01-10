@@ -73,8 +73,8 @@ def main():
     trainLabels = loadLabelSet(trainLabel)
     testLabels = loadLabelSet(testLabel)
 
-    lib = cdll.LoadLibrary('../searchLib.so')
-
+    lib = cdll.LoadLibrary('../LSH.so')
+    lsh = lib.LSH()
     # emd()
 
     # scipy.optimize.linprog()

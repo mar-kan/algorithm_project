@@ -4,7 +4,7 @@
 #include "ImageData.h"
 
 
-ImageData::ImageData(int num, int row, int col)
+ImageData::ImageData(string img, int num, int row, int col)
 {
     image_number = num;
     dimension = row*col;
@@ -55,3 +55,4 @@ void ImageData::setImageBit(unsigned char bit, int pos)
 {
     ImageData::image[pos] = bit;
 }
+

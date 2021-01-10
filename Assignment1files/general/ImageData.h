@@ -6,6 +6,8 @@
 
 #include <cstdlib>
 #include <iostream>
+#include <string>
+using namespace std;
 
 class ImageData {                           //class stores one image's data
 
@@ -13,10 +15,10 @@ class ImageData {                           //class stores one image's data
     int dimension;                          //size of vector of image
     long long unsigned g;                   //result of g hash family before final mod with size of table
 
-    unsigned char image[28*28];             //array of size dimension that stores each pixel of the image as a vector
+    unsigned char *image;//[28*28];             //array of size dimension that stores each pixel of the image as a vector
                                             //couldn't pass unsigned char dynamically for some reason so we did it statically
 public:
-    ImageData(int, int, int);
+    ImageData(string img, int num, int row, int col);
     ~ImageData();
 
     int getImageNumber() const;
