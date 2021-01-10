@@ -13,9 +13,6 @@ def encoder(num_of_convs, num_of_filters, conv_filter_size, input_img, latent_di
         if i == 0:
             conv = Conv2D(conv_filter_size, (num_of_filters, num_of_filters), activation='relu', padding='same')(
                 input_img)
-        elif i == 3:
-            conv = Conv2D(conv_filter_size, (num_of_filters, num_of_filters), strides=(2, 2), activation='relu',
-                          padding='same')(conv)
         else:
             conv = Conv2D(conv_filter_size, (num_of_filters, num_of_filters), activation='relu', padding='same')(conv)
         conv = BatchNormalization()(conv)

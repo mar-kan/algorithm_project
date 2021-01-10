@@ -18,7 +18,7 @@ def decoder(encoder_out, num_of_convs, conv_filter_size, num_of_filters):
     i = 0
     while i < num_of_convs - 2:
         if (i == num_of_convs - 3) and i != 0:
-            conv = Conv2DTranspose(conv_filter_size, (num_of_filters, num_of_filters), activation='relu')(up)
+            conv = Conv2DTranspose(conv_filter_size, (num_of_filters, num_of_filters), activation='relu',padding='same')(up)
         else:
             conv = Conv2DTranspose(conv_filter_size, (num_of_filters, num_of_filters), activation='relu',
                                    padding='same')(conv)
