@@ -20,4 +20,4 @@ add_executable(
         Assignment1files/Centroid.cpp Assignment1files/Centroid.h
         Assignment1files/CubeHashFunction.h Assignment1files/CubeHashFunction.cpp
         Assignment1files/Hypercube.h Assignment1files/Hypercube.cpp
-)
+        Assignment1files/general/imageStruct.h)

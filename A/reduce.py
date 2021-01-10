@@ -78,7 +78,7 @@ def main():
         print('Input number of convolutional filters per layer')
         num_of_filters = 7  # int(input())
         print('Input number of epochs')
-        epochs = 80  # int(input())
+        epochs = 50  # int(input())
         print('Input batch size')
         batch_size = 128  # int(input())
         print('Input latent space size')

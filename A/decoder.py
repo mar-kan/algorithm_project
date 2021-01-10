@@ -30,13 +30,13 @@ def decoder(encoder_out, num_of_convs, conv_filter_size, num_of_filters):
         conv = BatchNormalization()(conv)
 
         # up sampling only in last and 2nd from last layers
-        if i - num_of_convs - 4 <= 0:
+        if i >= num_of_convs - 4:
             up = UpSampling2D((2, 2))(conv)
 
         conv_filter_size = int(conv_filter_size / 2)
         i += 1
 
-    if num_of_convs == 2:
+    if num_of_convs <= 2:
         up = UpSampling2D((2, 2))(conv)
 
     # creates last layer
