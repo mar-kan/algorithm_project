@@ -27,11 +27,10 @@ public:
 
     int getImageNumber() const;
     int getDimension() const;
-    unsigned char * getImage() const;
     long long unsigned getG() const;
     void setG(long long unsigned);
     void setImageBit(unsigned char, int);
-
+    vector<unsigned char> *getImage() const;
 };
 
 

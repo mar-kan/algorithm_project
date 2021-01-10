@@ -186,7 +186,6 @@ void readQueryFile(LSH * lsh, Dataset * dataset, string type)                   
     if(!in.is_open() || in.fail())
         errorExit(4, "Cannot open query file", lsh, nullptr, dataset);
 
-
     //reads query file
     int num;
 

@@ -11,10 +11,10 @@ int calculateManhattanDistance(ImageData *im1, ImageData *im2)          //return
     int dist=0;
     for (int i=0; i<im1->getDimension(); i++)
     {
-        if (im1->getImage()[i] > im2->getImage()[i])
-            dist |= im1->getImage()[i] - im2->getImage()[i];
+        if (im1->getImage()->at(i) > im2->getImage()->at(i))
+            dist |= im1->getImage()->at(i) - im2->getImage()->at(i);
         else
-            dist |= im2->getImage()[i] - im1->getImage()[i];
+            dist |= im2->getImage()->at(i) - im1->getImage()->at(i);
     }
     return dist;
 }
@@ -25,7 +25,7 @@ int calculateHammingDistance(ImageData *im1, ImageData *im2)
     int dist=0;
     for (int i=0; i<im1->getDimension(); i++)       // checks each bit of the 2 images separately
     {
-        if ((im1->getImage()[i] ^ im2->getImage()[i]) != 0) //if its different increments distance
+        if ((im1->getImage()->at(i) ^ im2->getImage()->at(i)) != 0) //if its different increments distance
             dist++;
     }
     return dist;
@@ -34,10 +34,10 @@ int calculateHammingDistance(ImageData *im1, ImageData *im2)
 
 int calculateEuclidianDistance(ImageData *i1, ImageData *i2)          //returns L2 distance of 2 images
 {
-    float dist = 0.0;
+    int dist = 0;
     for (int i=0; i<i1->getDimension(); i++)
     {
-        //dist += (i1->getImagePos(i) - i2->getImagePos(i))^2;
+        dist += (i1->getImage()->at(i) - i2->getImage()->at(i))^2;
     }
     return dist;
 }
