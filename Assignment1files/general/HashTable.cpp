@@ -14,8 +14,8 @@ Bucket::Bucket()                                                //initializes em
 Bucket::~Bucket()                                               //deletes bucket list
 {
     list<ImageData*>::iterator it;
-    for (it=bucketList->begin(); it!=bucketList->end(); it++)
-        delete ((*it));
+    //for (it=bucketList->begin(); it!=bucketList->end(); it++)
+        //delete (*it);
 
     delete bucketList;
     delete myCentroid;
@@ -93,7 +93,7 @@ int HashTable::AssignInTableCluster(ImageData *image)
     int pos=0, dist;
     for (int i=0; i<size; i++)
     {
-        if ((dist = table[i]->getMyCentroid()->getCentroid() - image->getImage()) < min_dist)
+        //if ((dist = table[i]->getMyCentroid()->getCentroid() - image->getImage()) < min_dist)
         {
             min_dist = dist;
             pos = i;

@@ -20,7 +20,7 @@ ImageData::ImageData(int num, int row, int col, string type)
 
 ImageData::~ImageData()
 {
-    delete image;
+    //delete image;
 }
 
 
@@ -34,12 +34,6 @@ int ImageData::getImageNumber() const
 int ImageData::getDimension() const
 {
     return dimension;
-}
-
-
-unsigned char * ImageData::getImage() const
-{
-    return (unsigned char *)(image);
 }
 
 
@@ -59,4 +53,11 @@ void ImageData::setImageBit(unsigned char bit, int pos)
 {
     ImageData::image->at(pos) = bit;
 }
+
+
+vector<unsigned char> *ImageData::getImage() const
+{
+    return image;
+}
+
 

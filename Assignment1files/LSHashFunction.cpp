@@ -45,7 +45,7 @@ long long unsigned LSHashFunction::Hash(ImageData *image)   //hashes an image th
         //calculates h for each hashing
         for (int j=0; j<d; j++)
         {
-            float a = float((image->getImage()[d-j-1] - s->at(d-j-1))) / float(w);  /** calculate all a(j) = ( p(j)-s(j) )/w starting by the end**/
+            float a = float((image->getImage()->at(d-j-1) - s->at(d-j-1))) / float(w);  /** calculate all a(j) = ( p(j)-s(j) )/w starting by the end**/
 
             h[i] += modular(int(a), m^j, M);       //adds everytime to h[i]: res = ( a * m^j ) % M
         }
