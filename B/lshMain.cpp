@@ -114,7 +114,7 @@ int main(int argc, char * argv[])
     }while (answer == "yes" || answer == "y");              //repeats while the user inputs 'yes' or 'y'
 
     delete lshTrue;
-    //delete lshNew;
+    delete lshNew;
     cout << endl << "Exiting" << endl;
     exit(0);
 }

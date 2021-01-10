@@ -4,19 +4,23 @@
 #include "ImageData.h"
 
 
-ImageData::ImageData(string img, int num, int row, int col)
+ImageData::ImageData(int num, int row, int col, string type)
 {
     image_number = num;
     dimension = row*col;
     g = -1;
 
-    //image set later
+    //image initialized here and set later
+    if (type == "new")
+        image = new vector<unsigned char>(dimension * 2);   //2 pixels for each number
+    else
+        image = new vector<unsigned char>(dimension);
 }
 
 
 ImageData::~ImageData()
 {
-    //nothing to delete manually
+    delete image;
 }
 
 
@@ -53,6 +57,6 @@ void ImageData::setG(long long unsigned G)
 
 void ImageData::setImageBit(unsigned char bit, int pos)
 {
-    ImageData::image[pos] = bit;
+    ImageData::image->at(pos) = bit;
 }
 

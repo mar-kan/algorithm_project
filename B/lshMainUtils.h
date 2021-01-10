@@ -18,6 +18,7 @@
 #include "../Assignment1files/general/Dataset.h"
 #include "../Assignment1files/general/functions.h"
 #include "../Assignment1files/NearestNeighbour.h"
+
 using namespace std;
 
 
@@ -27,7 +28,9 @@ void inputFileName(LSH *, string);
 void readInputFile(LSH *, Dataset *, string);
 void readQueryFile(LSH *, Dataset *, string);
 
+/** printOutputFile function was split in 2 new functions **/
 void writeOutputQuery(LSH *, LSH*, NearestNeighbour *, NearestNeighbour*, ImageData*);
 void writeOutputInfo(LSH * lsh, float tReduced, float tLSH, float tTrue, float afLSH, float afReduced);
+
 
 #endif

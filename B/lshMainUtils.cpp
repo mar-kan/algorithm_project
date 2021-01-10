@@ -141,8 +141,11 @@ void readInputFile(LSH * lsh, Dataset * dataset, string type)                   
     //reads and creates an object for every image
     for(int i=0;i<dataset->getNumOfImgs();i++)
     {
+        //initializes new object for image
+        auto * img = new ImageData(i, dataset->getRows(), dataset->getColumns(), type);
+
         int count=0;
-        unsigned char img[dataset->getRows()*dataset->getColumns()];
+        //initialize array to store image to read
         for(int r=0;r<dataset->getRows();r++)
         {
             for(int c=0;c<dataset->getColumns();c++)
@@ -151,23 +154,21 @@ void readInputFile(LSH * lsh, Dataset * dataset, string type)                   
                 {
                     unsigned char temp;
                     in.read((char*)&temp,sizeof(temp));
-                    img[count++] = temp;//->setImageBit(temp, count++);
+                    img->setImageBit(temp, count++);
                 }
                 else
                 {
                     /** gets now 2 bits for each number **/
                     unsigned char temp1, temp2;
                     in.read((char*)&temp1,sizeof(temp1));
-                    img[count++] = temp1;//->setImageBit(temp1, count++);
+                    img->setImageBit(temp1, count++);
                     in.read((char*)&temp2,sizeof(temp2));
-                    img[count++] = temp2;//->setImageBit(temp2, count++);
+                    img->setImageBit(temp2, count++);
                 }
             }
         }
         //inserts image in dataset image list
-        string im = reinterpret_cast<char*>(img);
-        auto * image = new ImageData(im, i, dataset->getRows(), dataset->getColumns());
-        dataset->insertImage(image);
+        dataset->insertImage(img);
     }
 
     //checks if file was read successfully
@@ -209,7 +210,7 @@ void readQueryFile(LSH * lsh, Dataset * dataset, string type)                   
     for(int i=0;i<dataset->getNumOfImgs();i++)
     {
         //initializes new object for image
-        auto * img = new ImageData("",i, dataset->getRows(), dataset->getColumns());
+        auto * img = new ImageData(i, dataset->getRows(), dataset->getColumns(), type);
 
         int count=0;
         //initialize array to store image to read
