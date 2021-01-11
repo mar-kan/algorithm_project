@@ -1,4 +1,4 @@
-from ImageData import ImageData
+import scipy
 
 
 def emd(a, b):  # (image1 , image2):

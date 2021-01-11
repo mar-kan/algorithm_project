@@ -4,6 +4,7 @@ from ImageData import ImageData
 
 
 # translated dataset reading from exercise 1 and converted all bytes to ints
+
 def loadDataset(full_path):
     file = open(full_path, "rb")
 

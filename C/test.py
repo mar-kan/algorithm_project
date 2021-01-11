@@ -1,49 +1,6 @@
 import sys
-import time
-import scipy
-
 from loadDatasetBytes import *
-from distance import *
-
-
-def exactNN(trainSet, testSet, distType):  # translated function NearestNeighbour::ExactNN from assignment 1
-    # for each query goes through the dataset and finds nearest neighbours.
-    # stores them in a list of tuples[image_index, image]
-
-    nn = []  # list with nearest neighbours
-    start = time.time()
-
-    k_distance = 1000.0
-    for query in testSet:
-        index = 0
-        for entry in trainSet:
-            if distType == 'EMD':
-                distance = emd(query, entry)
-            else:
-                distance = manhattanDistance(query, entry)
-
-            if distance < k_distance:
-                nn.append([index, query])
-                if distance > k_distance:
-                    k_distance = distance
-
-            index += 1
-
-    end = time.time()
-    return nn, (end - start)  # returns list of neighbours and time elapsed
-
-
-def evaluateNeighbours(N, nn, trainLabels, testLabels):  # evaluates accuracy for N neighbours
-    count = 0
-    for neighbour in nn:
-        if count > N:  # evaluates 10 nearest neighbours
-            break
-
-        print(neighbour)
-
-        count += 1
-
-    return count / N
+from neighbour import *
 
 
 def checkArguments():
@@ -87,29 +44,39 @@ def main():
     trainsetName, testsetName, trainLabelName, testLabelName, outputFile = checkArguments()
 
     # reading datasets and label sets
+    print("Reading datasets")
     trainSet, numOfTrainImages = loadDataset(trainsetName)
     testSet, numOfTestImages = loadDataset(testsetName)
 
     trainLabels = loadLabelSet(trainLabelName)
     testLabels = loadLabelSet(testLabelName)
 
-    print("Executing EMD")
-    # nnEMD, timeEMD = exactNN(trainSet, testSet, 'EMD')
+    accuracyEMD = 0
+    accuracyMan = 0
+    timeEMD = -1
+    timeMan = -1
 
-    print("Executing Manhattan")
-    nnMan, timeMan = exactNN(trainSet, testSet, 'Manhattan')
+    print("Processing queries")
+    for query in testSet:
+        # find neighbours
+        # nnEMD, timeEMD = exactNN(trainSet, testSet, 'EMD')
+        nnMan, timeMan = exactNN(query, trainSet, 'Manhattan')
 
-    print("Evaluating")
-    # accuracyEMD = evaluateNeighbours(10, nnEMD, trainLabels, testLabels)
-    accuracyMan = evaluateNeighbours(10, nnMan, trainLabels, testLabels)
+        # evaluate 10 nearest neighbours
+        # accuracyEMD += evaluateNeighbours(10, nnEMD, trainLabels, testLabels)
+        accuracyMan += evaluateNeighbours(10, query, nnMan, trainLabels, testLabels)
+        break
 
     # writing output file
     file = open(outputFile, "w+")
-    file.write("Average Correct Search Results EMD: " + str(accuracyEMD))
-    file.write("Average Correct Search Results MANHATTAN: " + str(accuracyMan))
-    file.write("Time EMD: " + str(timeEMD))
-    file.write("Time Manhattan: " + str(timeMan))
+    #file.write("Average Correct Search Results EMD: " + str(accuracyEMD))
+    file.write("Average Correct Search Results MANHATTAN: " + str(accuracyMan )+'\n')#/ len(testSet)))
+    #file.write("Time EMD: " + str(timeEMD / len(testSet)))
+    file.write("Time Manhattan: " + str(timeMan)+'\n')
     file.close()
+
+    print("Exiting")
+    exit(0)
 
 
 if __name__ == "__main__":
