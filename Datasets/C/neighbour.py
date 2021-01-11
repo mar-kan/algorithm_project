@@ -32,7 +32,7 @@ def evaluateNeighbours(N, query, nn, trainLabels, testLabels):  # evaluates accu
             break
 
         # print(str(pairs[0])+",  "+str(testLabels[query.image_num]) + ", " + str(trainLabels[pairs[1].image_num]))
-        if testLabels[query.image_num] == trainLabels[pairs[1].image_num]:
+        if 5 == trainLabels[pairs[1].image_num]:
             correct += 1
 
         count += 1

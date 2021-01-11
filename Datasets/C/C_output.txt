@@ -1,0 +1,2 @@
+Average Correct Search Results EMD: 0Average Correct Search Results MANHATTAN: 1.1
+Time EMD: 4.76837158203125e-11Time Manhattan: 7.240422487258911
