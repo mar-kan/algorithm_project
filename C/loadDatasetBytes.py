@@ -32,10 +32,10 @@ def loadLabelSet(full_path):
     file = open(full_path, "rb")
 
     magic_number = int.from_bytes(file.read(4), byteorder='big')
-    num_of_images = int.from_bytes(file.read(4), byteorder='big')
+    num_of_labels = int.from_bytes(file.read(4), byteorder='big')
 
     labels = []  # stores all images
-    for i in range(0, num_of_images):
+    for i in range(0, num_of_labels):
         label = int.from_bytes(file.read(1), byteorder='big')
         labels.append(label)
 

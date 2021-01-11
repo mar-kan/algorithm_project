@@ -1,4 +1,5 @@
 import sys
+import time
 from loadDatasetBytes import *
 from neighbour import *
 
@@ -56,23 +57,35 @@ def main():
     timeEMD = -1
     timeMan = -1
 
-    print("Processing queries")
+    print("Processing queries with EMD")
     for query in testSet:
+        start = time.time()
         # find neighbours
-        # nnEMD, timeEMD = exactNN(trainSet, testSet, 'EMD')
-        nnMan, timeMan = exactNN(query, trainSet, 'Manhattan')
-
+        # nnEMD = exactNN(trainSet, testSet, 'EMD')
         # evaluate 10 nearest neighbours
         # accuracyEMD += evaluateNeighbours(10, nnEMD, trainLabels, testLabels)
-        accuracyMan += evaluateNeighbours(10, query, nnMan, trainLabels, testLabels)
+        end = time.time()
+        timeEMD = end - start
         break
+
+    print("Processing queries with Manhattan Distance")
+    for query in testSet:
+        start = time.time()
+        # find neighbours
+        nnMan = exactNN(query, trainSet, 'Manhattan')
+        # evaluate 10 nearest neighbours
+        accuracyMan += evaluateNeighbours(10, query, nnMan, trainLabels, testLabels)
+
+        end = time.time()
+        timeMan = end - start
+        #break
 
     # writing output file
     file = open(outputFile, "w+")
-    #file.write("Average Correct Search Results EMD: " + str(accuracyEMD))
-    file.write("Average Correct Search Results MANHATTAN: " + str(accuracyMan )+'\n')#/ len(testSet)))
-    #file.write("Time EMD: " + str(timeEMD / len(testSet)))
-    file.write("Time Manhattan: " + str(timeMan)+'\n')
+    file.write("Average Correct Search Results EMD: " + str(accuracyEMD) + '\n')  # / len(testSet)))
+    file.write("Average Correct Search Results MANHATTAN: " + str(accuracyMan) + '\n')  # / len(testSet)))
+    file.write("Time EMD: " + str(timeEMD) + '\n')
+    file.write("Time Manhattan: " + str(timeMan) + '\n')
     file.close()
 
     print("Exiting")

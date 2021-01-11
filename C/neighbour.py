@@ -1,5 +1,3 @@
-import time
-
 from ImageData import ImageData
 from distance import *
 
@@ -9,9 +7,7 @@ def exactNN(query, trainSet, distType):  # translated function NearestNeighbour:
     # stores them in a list of tuples [distance, ImageData]
 
     nn = []  # list with nearest neighbours
-    start = time.time()
-
-    k_distance = 1000.0
+    k_distance = 10000.0
     for entry in trainSet:
         if distType == 'EMD':
             distance = emd(query, entry)
@@ -19,25 +15,24 @@ def exactNN(query, trainSet, distType):  # translated function NearestNeighbour:
             distance = manhattanDistance(query, entry)
 
         if distance < k_distance:
-            nn.append([distance, query])
+            nn.append([distance, entry])
         elif distance > k_distance:
             k_distance = distance
 
-    end = time.time()
-    return nn, (end - start)  # returns list of neighbours and time elapsed
+    return nn  # returns list of neighbours
 
 
 def evaluateNeighbours(N, query, nn, trainLabels, testLabels):  # evaluates accuracy for N neighbours of a query
     correct = 0
     count = 0
 
-    nn.sort(key=lambda x: x[0], reverse=True)   # sorts list of neighbours by distance
+    nn.sort(key=lambda x: x[0], reverse=False)  # sorts list of neighbours by distance
     for pairs in nn:
-        #if count > N:  # evaluates N nearest neighbours
-            #break
+        if count > N:  # evaluates N nearest neighbours
+            break
 
-        print(str(testLabels[query.image_num]) + ", " + str(trainLabels[pairs[1].image_num]))
-        if testLabels[query.image_num] == trainLabels[pairs[1].image_num]:
+        # print(str(pairs[0])+",  "+str(testLabels[query.image_num]) + ", " + str(trainLabels[pairs[1].image_num]))
+        if 5 == trainLabels[pairs[1].image_num]:
             correct += 1
 
         count += 1

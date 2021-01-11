@@ -12,8 +12,8 @@ def manhattanDistance(image1, image2):  # calculateManhattanDistance from exerci
     dist = 0
     for i in range(0, image1.dimension):
         if image1.image[i] > image2.image[i]:
-            dist |= image1.image[i] - image2.image[i]
+            dist += image1.image[i] - image2.image[i]
         else:
-            dist |= image2.image[i] - image1.image[i]
+            dist += image2.image[i] - image1.image[i]
 
     return dist
