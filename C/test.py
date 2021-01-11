@@ -1,29 +1,6 @@
 import sys
-import time
-import scipy
-
-
-sys.path.insert(0, '../')
-from A.loadDataset import *
-
-
-def emd(a, b):
-    earth = 0
-    earth1 = 0
-    diff = 0
-    s = len(a)
-    su = []
-    diff_array = []
-    for i in range(0, s):
-        diff = a[i] - b[i]
-        diff_array.append(diff)
-        diff = 0
-    for j in range(0, s):
-        earth = (earth + diff_array[j])
-        earth1 = abs(earth)
-        su.append(earth1)
-    emd_output = sum(su) / (s - 1)
-    print(emd_output)
+from loadDatasetBytes import *
+from neighbour import *
 
 
 def checkArguments():
@@ -63,70 +40,43 @@ def checkArguments():
     return trainSet, testSet, trainLabels, testLabels, outputFile
 
 
-def exactNNN(Algorithm* algo, string method, ImageData *query_img, Dataset *dataset) //executes exact nearest neighbor for query_img. stores results in realResults
-    {                                                                                 //also computes real time
-const clock_t begin_time = clock();
-int insertions=0;
-
-float k_distance = 1000.0;  //stores max distance inserted in map
-for (int i=0; i<dataset->getNumOfImgs(); i++)                       //traverses dataset's vector with all the images
-{
-float distance = calculateManhattanDistance(query_img, dataset->getImagePos(i));
-if (distance < k_distance)
-{
-realResults->insert(pair<float, ImageData*>(distance, dataset->getImagePos(i)));
-insertions++;
-if (distance > k_distance)
-k_distance = distance;
-}
-
-if (method == "LSH")
-{
-//if (insertions/10 > ((LSH*)algo)->getL())                                //function returns if inserted much data
-//break;
-}
-else
-{
-//if (insertions/10 > ((Hypercube*)algo)->getM())                          //function returns if it inserted much data
-//break;
-}
-}
-secs_real = float(clock() - begin_time) / CLOCKS_PER_SEC;
-}
-
-
 def main():
     trainsetName, testsetName, trainLabelName, testLabelName, outputFile = checkArguments()
 
     # reading datasets and label sets
+    print("Reading datasets")
     trainSet, numOfTrainImages = loadDataset(trainsetName)
     testSet, numOfTestImages = loadDataset(testsetName)
 
     trainLabels = loadLabelSet(trainLabelName)
     testLabels = loadLabelSet(testLabelName)
 
-    nn = [] # list with nearest neighbours
+    accuracyEMD = 0
+    accuracyMan = 0
+    timeEMD = -1
+    timeMan = -1
 
-
-    start = time.time()
+    print("Processing queries")
     for query in testSet:
-        for entry in trainSet:
-            dist = emd(query, entry)
+        # find neighbours
+        # nnEMD, timeEMD = exactNN(trainSet, testSet, 'EMD')
+        nnMan, timeMan = exactNN(query, trainSet, 'Manhattan')
 
-
-    end = time.time()
-    print(end - start)
-
-    # emd()
-
-    # scipy.optimize.linprog()
+        # evaluate 10 nearest neighbours
+        # accuracyEMD += evaluateNeighbours(10, nnEMD, trainLabels, testLabels)
+        accuracyMan += evaluateNeighbours(10, query, nnMan, trainLabels, testLabels)
+        break
 
     # writing output file
     file = open(outputFile, "w+")
-    file.write("Average Correct Search Results EMD: <double>")
-    file.write("Average Correct Search Results MANHATTAN: <double> ")
-    file.write("Time EMD: "+str(end - start))
+    #file.write("Average Correct Search Results EMD: " + str(accuracyEMD))
+    file.write("Average Correct Search Results MANHATTAN: " + str(accuracyMan )+'\n')#/ len(testSet)))
+    #file.write("Time EMD: " + str(timeEMD / len(testSet)))
+    file.write("Time Manhattan: " + str(timeMan)+'\n')
     file.close()
+
+    print("Exiting")
+    exit(0)
 
 
 if __name__ == "__main__":
