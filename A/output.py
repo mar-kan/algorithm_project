@@ -11,12 +11,9 @@ def createOutputFile(filename, rows, columns, vectors):  # creates output file f
     output_file.write(rows.to_bytes(4, byteorder='big'))  # writes number of rows
     output_file.write(columns.to_bytes(4, byteorder='big'))  # writes number of columns
 
-    test = open('test.txt', "w+")
-
     # writes vectors
     for vector in vectors:
         for num in vector:
             output_file.write(bytes(num))
-            test.write(num)
-        test.write("\n")
+
     output_file.close()
