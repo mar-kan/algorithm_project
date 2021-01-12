@@ -4,17 +4,14 @@
 #include "ImageData.h"
 
 
-ImageData::ImageData(int num, int row, int col, string type)
+ImageData::ImageData(int num, int row, int col)
 {
     image_number = num;
     dimension = row*col;
     g = -1;
 
     //image initialized here and set later
-    if (type == "new")
-        image = new vector<unsigned char>(dimension * 2);   //2 pixels for each number
-    else
-        image = new vector<unsigned char>(dimension);
+    image = new vector<unsigned char>(dimension);
 }
 
 
@@ -58,6 +55,12 @@ void ImageData::setImageBit(unsigned char bit, int pos)
 vector<unsigned char> *ImageData::getImage() const
 {
     return image;
+}
+
+
+void ImageData::setDimension(int dim)
+{
+    this->dimension = dim;
 }
 
 

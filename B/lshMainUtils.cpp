@@ -136,13 +136,16 @@ void readInputFile(LSH * lsh, Dataset * dataset, string type)                   
 
     //reads and stores num of columns in dataset
     in.read((char*)&num,sizeof(num));
-    dataset->setColumns(reverseInt(num));
+    if (type == "true")
+        dataset->setColumns(reverseInt(num));
+    else
+        dataset->setColumns(reverseInt(num) * 2);   //2 bytes per number
 
     //reads and creates an object for every image
     for(int i=0;i<dataset->getNumOfImgs();i++)
     {
         //initializes new object for image
-        auto * img = new ImageData(i, dataset->getRows(), dataset->getColumns(), type);
+        auto * img = new ImageData(i, dataset->getRows(), dataset->getColumns());
 
         int count=0;
         //initialize array to store image to read
@@ -150,23 +153,14 @@ void readInputFile(LSH * lsh, Dataset * dataset, string type)                   
         {
             for(int c=0;c<dataset->getColumns();c++)
             {
-                if (type == "true")
-                {
-                    unsigned char temp;
-                    in.read((char*)&temp,sizeof(temp));
-                    img->setImageBit(temp, count++);
-                }
-                else
-                {
-                    /** gets now 2 bits for each number **/
-                    unsigned char temp1, temp2;
-                    in.read((char*)&temp1,sizeof(temp1));
-                    img->setImageBit(temp1, count++);
-                    in.read((char*)&temp2,sizeof(temp2));
-                    img->setImageBit(temp2, count++);
-                }
+                unsigned char temp;
+                in.read((char*)&temp,sizeof(temp));
+                img->setImageBit(temp, count++);
+                if (type == "new" && temp != 0)
+                    cout << "hooraayy!"<<endl;
             }
         }
+
         //inserts image in dataset image list
         dataset->insertImage(img);
     }
@@ -209,7 +203,7 @@ void readQueryFile(LSH * lsh, Dataset * dataset, string type)                   
     for(int i=0;i<dataset->getNumOfImgs();i++)
     {
         //initializes new object for image
-        auto * img = new ImageData(i, dataset->getRows(), dataset->getColumns(), type);
+        auto * img = new ImageData(i, dataset->getRows(), dataset->getColumns());
 
         int count=0;
         //initialize array to store image to read

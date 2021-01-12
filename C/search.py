@@ -58,32 +58,36 @@ def main():
     timeMan = -1
 
     print("Processing queries with EMD")
+    start = time.time()
     for query in testSet:
-        start = time.time()
         # find neighbours
-        # nnEMD = exactNN(trainSet, testSet, 'EMD')
+        nnEMD = exactNN(query, trainSet, 'EMD', 7)
         # evaluate 10 nearest neighbours
-        # accuracyEMD += evaluateNeighbours(10, nnEMD, trainLabels, testLabels)
-        end = time.time()
-        timeEMD = end - start
+        accuracyEMD += evaluateNeighbours(10, query, nnEMD, trainLabels, testLabels)
         break
 
+    end = time.time()
+    timeEMD = end - start
+
     print("Processing queries with Manhattan Distance")
+    start = time.time()
     for query in testSet:
-        start = time.time()
         # find neighbours
         nnMan = exactNN(query, trainSet, 'Manhattan')
         # evaluate 10 nearest neighbours
         accuracyMan += evaluateNeighbours(10, query, nnMan, trainLabels, testLabels)
 
-        end = time.time()
-        timeMan = end - start
-        #break
+        print(query.image_num)
+        if query.image_num > 39:
+            break
+
+    end = time.time()
+    timeMan = end - start
 
     # writing output file
     file = open(outputFile, "w+")
-    file.write("Average Correct Search Results EMD: " + str(accuracyEMD) + '\n')  # / len(testSet)))
-    file.write("Average Correct Search Results MANHATTAN: " + str(accuracyMan) + '\n')  # / len(testSet)))
+    file.write("Average Correct Search Results EMD: " + str(accuracyEMD)+'\n') #/ len(testSet)) + '\n')
+    file.write("Average Correct Search Results MANHATTAN: " + str(accuracyMan / 40) + '\n')
     file.write("Time EMD: " + str(timeEMD) + '\n')
     file.write("Time Manhattan: " + str(timeMan) + '\n')
     file.close()

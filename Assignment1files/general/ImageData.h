@@ -22,7 +22,7 @@ class ImageData {                           //class stores one image's data
 
 public:
     //couldn't pass unsigned char dynamically for some reason so we did it statically
-    ImageData(int num, int row, int col, string type);
+    ImageData(int num, int row, int col);
     ~ImageData();
 
     int getImageNumber() const;
@@ -31,6 +31,7 @@ public:
     void setG(long long unsigned);
     void setImageBit(unsigned char, int);
     vector<unsigned char> *getImage() const;
+    void setDimension(int dim);
 };
 
 

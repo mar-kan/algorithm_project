@@ -14,14 +14,18 @@ def loadDataset(full_path):
     columns = int.from_bytes(file.read(4), byteorder='big')
 
     images = []  # stores all images
+    count = 0
     for i in range(0, num_of_images):
         img = []
-        count = 0
         for r in range(0, rows):
+            row = []
             for c in range(0, columns):
-                img.append(int.from_bytes(file.read(1), byteorder='big'))
+                # normalize and add in list
+                num = int.from_bytes(file.read(1), byteorder='big') / 255.0
+                row.append(num)
+            img.append(row)
 
-        image = ImageData(count, rows*columns, img)
+        image = ImageData(count, rows, columns, img)
         images.append(image)
         count += 1
 

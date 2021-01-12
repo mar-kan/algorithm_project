@@ -14,6 +14,6 @@ def createOutputFile(filename, rows, columns, vectors):  # creates output file f
     # writes vectors
     for vector in vectors:
         for num in vector:
-            output_file.write(bytes(num))
+            output_file.write(num.to_bytes(2, byteorder='little'))
 
     output_file.close()
