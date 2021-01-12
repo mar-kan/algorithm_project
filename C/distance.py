@@ -46,26 +46,20 @@ def emd(image1, image2, cluster_dim):
     distance = []
     cost = []
     for i in range(0, len(clusters1)):
-        # set which cluster's centroid will be the supplier and which the consumer
-        if w1[int(clusters1[i].shape[0] / 2)] > w2[int(clusters1[i].shape[0] / 2)]:
-            supplier = clusters1[i][i][int(clusters1[i].shape[0] / 2)]
-            consumer = clusters2[i][i][int(clusters1[i].shape[0] / 2)]
-        else:
-            supplier = clusters2[i][int(clusters1[i].shape[0] / 2)]
-            consumer = clusters1[i][int(clusters1[i].shape[0] / 2)]
-
+        # either cluster could be the supplier or the consumer
         flow.append(abs(w1[i] - w2[i]) / 2)
-        distance.append(groundDistance(supplier, consumer))
+        distance.append(groundDistance(clusters1[i][int(clusters1[i].shape[0] / 2)], clusters2[i][int(clusters1[i].shape[0] / 2)]))
 
+    # creating cost function
     for i in range(0, len(flow)):
         cost.append(distance[i] * flow[i])
 
-
+    # solving linear problem with simplex
     outputs = optimize.linprog(
         c=cost,
-        A_ub=[[1, 1]],
-        b_ub=[6],
-        bounds=(1, 5),
+        A_ub=[[0, len(cost)]],
+        b_ub=[0],
+        bounds=(0, None),
         method='simplex'
     )
 
