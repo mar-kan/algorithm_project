@@ -156,8 +156,6 @@ void readInputFile(LSH * lsh, Dataset * dataset, string type)                   
                 unsigned char temp;
                 in.read((char*)&temp,sizeof(temp));
                 img->setImageBit(temp, count++);
-                if (type == "new" && temp != 0)
-                    cout << "hooraayy!"<<endl;
             }
         }
 

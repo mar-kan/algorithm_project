@@ -41,28 +41,35 @@ def emd(image1, image2, cluster_dim):
     clusters2 = createClusters(image2, cluster_dim)
     w2 = calculateWeights(clusters2)
 
-    # implementing EMD in every cluster and calculating distance and flow
+    # implementing EMD in every cluster and calculating flow and distance
     flow = []
     distance = []
-
+    cost = []
     for i in range(0, len(clusters1)):
-        # set which cluster will be the supplier and which the consumer
-        if w1[len(clusters1 / 2)] > w2[len(clusters2 / 2)]:
-            supplier = clusters1[len(clusters1 / 2)]
-            consumer = clusters2[len(clusters2 / 2)]
+        # set which cluster's centroid will be the supplier and which the consumer
+        if w1[int(len(clusters1 / 2))] > w2[int(len(clusters2 / 2))]:
+            supplier = clusters1[i][int(len(clusters1 / 2))]
+            consumer = clusters2[i][int(len(clusters2 / 2))]
         else:
-            supplier = clusters2[len(clusters2) / 2]
-            consumer = clusters1[len(clusters1 / 2)]
+            supplier = clusters2[i][int(len(clusters2) / 2)]
+            consumer = clusters1[i][int(len(clusters1 / 2))]
+
+        flow.append(abs(w1[i] - w2[i]) / 2)
+        distance.append(groundDistance(supplier, consumer))
+
+    for i in range(0, len(flow)):
+        cost.append(distance[i] * flow[i])
 
 
-    optimize.linprog(
-        c = flow * distance,
+    outputs = optimize.linprog(
+        c=cost,
         A_ub=[[1, 1]],
         b_ub=[6],
         bounds=(1, 5),
         method='simplex'
     )
-    return 1
+
+    return outputs.values()
 
 
 def manhattanDistance(image1, image2):  # calculateManhattanDistance from exercise 1 translated
