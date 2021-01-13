@@ -72,17 +72,17 @@ def main():
         # user inputs hyperparameters
         print()
         print('Input number of convolutional layers')
-        num_of_convs = 6  # int(input())
+        num_of_convs = int(input())
         print('Input size of convolutional filters')
-        conv_filter_size = 32  # int(input())
+        conv_filter_size = int(input())
         print('Input number of convolutional filters per layer')
-        num_of_filters = 7  # int(input())
+        num_of_filters = int(input())
         print('Input number of epochs')
-        epochs = 50  # int(input())
+        epochs = int(input())
         print('Input batch size')
-        batch_size = 128  # int(input())
+        batch_size = int(input())
         print('Input latent space size')
-        latent_space = 10  # int(input())
+        latent_space = int(input())
 
         # nn is created
         autoencoder = Model(nn_input,
@@ -144,19 +144,19 @@ def main():
 
 
 if __name__ == "__main__":
-    config = tf.compat.v1.ConfigProto()
-    config.gpu_options.allow_growth = True
-    config.gpu_options.per_process_gpu_memory_fraction = 0.8
+    # config = tf.compat.v1.ConfigProto()
+    # config.gpu_options.allow_growth = True
+    # config.gpu_options.per_process_gpu_memory_fraction = 0.8
 
-    os.environ["CUDA_VISIBLE_DEVICES"] = "0"
-    config = tf.compat.v1.ConfigProto()
-    config.gpu_options.allow_growth = True
-    config.gpu_options.per_process_gpu_memory_fraction = 0.8
-    set_session(tf.compat.v1.Session(config=config))
+    # os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+    # config = tf.compat.v1.ConfigProto()
+    # config.gpu_options.allow_growth = True
+    # config.gpu_options.per_process_gpu_memory_fraction = 0.8
+    # set_session(tf.compat.v1.Session(config=config))
 
-    device_name = tf.test.gpu_device_name()
-    if device_name != '/device:GPU:0':
-        raise SystemError('GPU not found')
-    print('GPU at : {}'.format(device_name))
+    # device_name = tf.test.gpu_device_name()
+    # if device_name != '/device:GPU:0':
+    #    raise SystemError('GPU not found')
+    # print('GPU at : {}'.format(device_name))
 
     main()

@@ -100,8 +100,8 @@ int main(int argc, char * argv[])
             delete nnTrue;
         }
 
-        float afLSH = distLSH / (float)datasetTrue->getQueryCount();
-        float afReduced = distReduced / (float)datasetNew->getQueryCount();
+        float afLSH = distLSH ;/// (float)datasetTrue->getQueryCount();
+        float afReduced = distReduced;/// / (float)datasetNew->getQueryCount();
         writeOutputInfo(lshTrue, tReduced, tLSH, tTrue, afLSH, afReduced);
 
         clearFileNames(lshTrue);                                //erases all file names to input new ones in each iteration

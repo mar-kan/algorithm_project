@@ -32,6 +32,9 @@ HashTable::HashTable(int s)                                     //initializes em
 {
     size = s;
     table = new Bucket*[size];
+
+    for (int i=0; i<size; i++)
+        table[i] = new Bucket();                         //initializes new bucket if needed
 }
 
 
