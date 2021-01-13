@@ -92,7 +92,7 @@ int HashTable::AssignInTableCluster(ImageData *image)
 {
     /** assigns image to centroid with min l1 distance **/
 
-    int min_dist = 100000;
+    /*int min_dist = 100000;
     int pos=0, dist;
     for (int i=0; i<size; i++)
     {
@@ -103,7 +103,8 @@ int HashTable::AssignInTableCluster(ImageData *image)
         }
     }
     table[pos]->InsertInBucket(image);
-    return pos;
+    return pos;*/
+    return 0;
 }
 
 

@@ -43,7 +43,7 @@ int main(int argc, char * argv[])
         lshNew->initializeHashTables(datasetNew->getNumOfImgs()/8);                         //initializes hash tables in LSH with size = num_of_images / 8
 
         cout << "True dim: Choosing W"<< endl;
-        lshTrue->setW(40000/**datasetTrue->pickWLSH()**/);                                               //picks suitable W for the dataset and sets it in lsh
+        lshTrue->setW(datasetTrue->pickWLSH());                                               //picks suitable W for the dataset and sets it in lsh
         cout << "Picked W = "<< lshTrue->getW() << endl;
         cout << "New dim: Choosing W"<< endl;
         lshNew->setW(datasetNew->pickWLSH());                                               //picks suitable W for the dataset and sets it in lsh
@@ -100,8 +100,8 @@ int main(int argc, char * argv[])
             delete nnTrue;
         }
 
-        float afLSH = distLSH ;/// (float)datasetTrue->getQueryCount();
-        float afReduced = distReduced;/// / (float)datasetNew->getQueryCount();
+        float afLSH = distLSH / (float)datasetTrue->getQueryCount();
+        float afReduced = distReduced / (float)datasetNew->getQueryCount();
         writeOutputInfo(lshTrue, tReduced, tLSH, tTrue, afLSH, afReduced);
 
         clearFileNames(lshTrue);                                //erases all file names to input new ones in each iteration

@@ -36,9 +36,9 @@ void NearestNeighbour::ExactNNN(Algorithm* algo, string method, ImageData *query
         {
             realResults->insert(pair<float, ImageData*>(distance, dataset->getImagePos(i)));
             insertions++;
-            if (distance > k_distance)
-                k_distance = distance;
         }
+        if (distance > k_distance)
+            k_distance = distance;
     }
     secs_real = float(clock() - begin_time) / CLOCKS_PER_SEC;
 }
