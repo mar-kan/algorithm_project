@@ -1,5 +1,4 @@
 import sys
-import time
 from loadDatasetBytes import *
 from neighbour import *
 
@@ -56,8 +55,6 @@ def main():
     accuracyMan = 0
 
     print("Processing queries")
-    iter = 0
-    start = time.time()
     for query in testSet:
         # find neighbours
         nnEMD = exactNN(query, trainSet, 'EMD', 7)
@@ -69,13 +66,10 @@ def main():
         # evaluate 10 nearest neighbours
         accuracyMan += evaluateNeighbours(10, query, nnMan, trainLabels, testLabels)
 
-        iter += 1
-        break
-
     # writing output file
     file = open(outputFile, "w+")
-    file.write("Average Correct Search Results EMD: " + str(accuracyEMD / iter) + '\n')  # / len(testSet)) + '\n')
-    file.write("Average Correct Search Results MANHATTAN: " + str(accuracyMan / iter) + '\n')
+    file.write("Average Correct Search Results EMD: " + str(accuracyEMD / len(testSet)) + '\n')
+    file.write("Average Correct Search Results MANHATTAN: " + str(accuracyMan / len(testSet)) + '\n')
     file.close()
 
     print("Exiting")

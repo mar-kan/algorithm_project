@@ -73,7 +73,7 @@ int main(int argc, char * argv[])
         cout << "Executing algorithms" << endl;
         for (int i=0; i<datasetNew->getQueryCount(); i++)  //for each query image
         {
-            cout << "Processing query - "<< i << endl;
+            //cout << "Processing query - "<< i << endl;
 
             /** executes all algorithms **/
             auto * nnNew = new NearestNeighbour(lshNew->getN());
@@ -100,7 +100,7 @@ int main(int argc, char * argv[])
             delete nnTrue;
         }
 
-        float afLSH = distLSH / (float)datasetTrue->getQueryCount();
+        float afLSH = distLSH / (float)datasetNew->getQueryCount();
         float afReduced = distReduced / (float)datasetNew->getQueryCount();
         writeOutputInfo(lshTrue, tReduced, tLSH, tTrue, afLSH, afReduced);
 

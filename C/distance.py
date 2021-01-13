@@ -57,7 +57,7 @@ def emd(image1, image2, cluster_dim):
             w2_new.append(int(w2[i] - flow[i]))
 
     # setting up restrictions
-    zeros = np.zeros(len(flow))
+    zeros = np.zeros(len(flow), dtype=int)
 
     Sf = 0
     for num in flow:
@@ -82,11 +82,9 @@ def emd(image1, image2, cluster_dim):
         b_ub=[Bub],
         A_eq=np.array(Aeq),
         b_eq=[Beq],
-        method='simplex')
-
-    if not res.success:
-        print(res.message)
-        return -1
+        bounds=(0, None),
+        method='simplex'
+    )
 
     return res.fun
 

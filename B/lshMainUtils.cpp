@@ -62,7 +62,7 @@ void writeOutputQuery(LSH *lshN, LSH* lshT, NearestNeighbour *nnN, NearestNeighb
     fprintf(fp, "Query: %d\n", q_im->getImageNumber());
     fprintf(fp, "Nearest neighbor Reduced: %d\n", nnN->getNnResults()->begin()->second->getImageNumber());
     fprintf(fp, "Nearest neighbor LSH: %d\n", nnT->getNnResults()->begin()->second->getImageNumber());
-    fprintf(fp, "Nearest neighbor True: %d\n", nnT->getNnResults()->begin()->second->getImageNumber());
+    fprintf(fp, "Nearest neighbor True: %d\n", nnT->getRealResults()->begin()->second->getImageNumber());
     fprintf(fp, "distanceReduced: %f\n", nnN->getNnResults()->begin()->first);
     fprintf(fp, "distanceLSH: %f\n", nnT->getNnResults()->begin()->first);
     fprintf(fp, "distanceTrue: %f\n", nnT->getRealResults()->begin()->first);
