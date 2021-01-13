@@ -4,7 +4,7 @@ CFLAGS=-Wall -std=c++11 -O3 -g3 -pg -std=c++0x
 all: search
 
 search: lshMain.o LSH.o lshMainUtils.o LSHashFunction.o NearestNeighbour.o HashTable.o Dataset.o distance.o functions.o ImageData.o Algorithm.o Hypercube.o Centroid.o CubeHashFunction.o
-	$(CC) -o lsh lshMain.o LSH.o lshMainUtils.o LSHashFunction.o NearestNeighbour.o HashTable.o Dataset.o distance.o functions.o ImageData.o Algorithm.o Hypercube.o Centroid.o CubeHashFunction.o $(CFLAGS)
+	$(CC) -o search lshMain.o LSH.o lshMainUtils.o LSHashFunction.o NearestNeighbour.o HashTable.o Dataset.o distance.o functions.o ImageData.o Algorithm.o Hypercube.o Centroid.o CubeHashFunction.o $(CFLAGS)
 
 #cluster: D/clusterMain.o D/Algorithm.o D/Centroid.o D/Cluster.o D/clusterMainUtils.o D/Lloyds.o D/Silhouette.o general/HashTable.o general/Dataset.o general/distance.o general/functions.o general/ImageData.o B/LSH.o B/Hypercube.o B/CubeHashFunction.o B/LSHashFunction.o
 #	$(CC) $(CFLAGS) -o cluster clusterMain.o Algorithm.o Centroid.o Cluster.o clusterMainUtils.o Lloyds.o Silhouette.o HashTable.o Dataset.o distance.o functions.o ImageData.o LSH.o Hypercube.o CubeHashFunction.o LSHashFunction.o $(CFLAGS)

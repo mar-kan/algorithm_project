@@ -9,12 +9,10 @@ using namespace std;
 int calculateManhattanDistance(ImageData *im1, ImageData *im2)          //returns L1 distance of 2 images
 {
     int dist=0;
-    for (int i=0; i<im1->getDimension(); i++)
+    for (int i=0; i<im1->getDimension(); i++)       // checks each bit of the 2 images separately
     {
-        if (im1->getImage()->at(i) > im2->getImage()->at(i))
-            dist |= im1->getImage()->at(i) - im2->getImage()->at(i);
-        else
-            dist |= im2->getImage()->at(i) - im1->getImage()->at(i);
+        if ((im1->getImage()->at(i) ^ im2->getImage()->at(i)) != 0) //if its different increments distance
+            dist++;
     }
     return dist;
 }
@@ -32,7 +30,7 @@ int calculateHammingDistance(ImageData *im1, ImageData *im2)
 }
 
 
-int calculateEuclidianDistance(ImageData *i1, ImageData *i2)          //returns L2 distance of 2 images
+int calculateEuclideanDistance(ImageData *i1, ImageData *i2)          //returns L2 distance of 2 images
 {
     int dist = 0;
     for (int i=0; i<i1->getDimension(); i++)

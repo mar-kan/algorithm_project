@@ -12,12 +12,14 @@ def exactNN(query, trainSet, distType, cluster_dim):  # translated function Near
     for entry in trainSet:
         if distType == 'EMD':
             distance = emd(query, entry, cluster_dim)
+            if distance == -1:
+                continue
         else:
             distance = manhattanDistance(query, entry)
 
         if distance < k_distance:
             nn.append([distance, entry])
-        elif distance > k_distance:
+        else:
             k_distance = distance
 
     return nn  # returns list of neighbours

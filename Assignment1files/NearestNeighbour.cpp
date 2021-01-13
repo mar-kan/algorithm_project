@@ -36,20 +36,9 @@ void NearestNeighbour::ExactNNN(Algorithm* algo, string method, ImageData *query
         {
             realResults->insert(pair<float, ImageData*>(distance, dataset->getImagePos(i)));
             insertions++;
-            if (distance > k_distance)
-                k_distance = distance;
         }
-
-        if (method == "LSH")
-        {
-            //if (insertions/10 > ((LSH*)algo)->getL())                                //function returns if inserted much data
-                //break;
-        }
-        else
-        {
-            //if (insertions/10 > ((Hypercube*)algo)->getM())                          //function returns if it inserted much data
-                //break;
-        }
+        if (distance > k_distance)
+            k_distance = distance;
     }
     secs_real = float(clock() - begin_time) / CLOCKS_PER_SEC;
 }
@@ -68,13 +57,13 @@ void NearestNeighbour::ApproximateNNN(Algorithm* algo, string method, ImageData 
 }
 
 
-void NearestNeighbour::RangeSearch(Algorithm* algo, string method, ImageData *query_img) //executes range search for query_img. stores results in rangeResults
+/*void NearestNeighbour::RangeSearch(Algorithm* algo, string method, ImageData *query_img) //executes range search for query_img. stores results in rangeResults
 {
     if (method == "LSH")
         ((LSH*)algo)->RangeSearch(rangeResults, query_img);
     else
         ((Hypercube*)algo)->RangeSearch(rangeResults, query_img);
-}
+}*/
 
 
 /** setters and getters **/

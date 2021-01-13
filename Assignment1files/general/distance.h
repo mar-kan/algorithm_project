@@ -8,6 +8,6 @@
 
 int calculateManhattanDistance(ImageData*, ImageData*);
 int calculateHammingDistance(ImageData*, ImageData*);
-int calculateEuclidianDistance(ImageData*, ImageData*);
+int calculateEuclideanDistance(ImageData*, ImageData*);
 
 #endif
