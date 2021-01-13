@@ -17,7 +17,7 @@ ImageData::ImageData(int num, int row, int col)
 
 ImageData::~ImageData()
 {
-    //delete image;
+    delete image;
 }
 
 

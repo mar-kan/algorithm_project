@@ -72,17 +72,17 @@ def main():
         # user inputs hyperparameters
         print()
         print('Input number of convolutional layers')
-        num_of_convs = int(input())
+        num_of_convs = 6  # int(input())
         print('Input size of convolutional filters')
-        conv_filter_size = int(input())
+        conv_filter_size = 32  # int(input())
         print('Input number of convolutional filters per layer')
-        num_of_filters = int(input())
+        num_of_filters = 7  # int(input())
         print('Input number of epochs')
-        epochs = int(input())
+        epochs = 50  # int(input())
         print('Input batch size')
-        batch_size = int(input())
+        batch_size = 64  # int(input())
         print('Input latent space size')
-        latent_space = int(input())
+        latent_space = 50  # int(input())
 
         # nn is created
         autoencoder = Model(nn_input,
@@ -157,6 +157,6 @@ if __name__ == "__main__":
     # device_name = tf.test.gpu_device_name()
     # if device_name != '/device:GPU:0':
     #    raise SystemError('GPU not found')
-    # print('GPU at : {}'.format(device_name))
+    #z print('GPU at : {}'.format(device_name))
 
     main()

@@ -45,14 +45,19 @@ def emd(image1, image2, cluster_dim):
     flow = []
     distance = []
     cost = []
+    w2_new = []
     for i in range(0, len(clusters1)):
         # either cluster could be the supplier or the consumer
         flow.append(abs(w1[i] - w2[i]) / 2)
         distance.append(
             groundDistance(clusters1[i][int(clusters1[i].shape[0] / 2)], clusters2[i][int(clusters1[i].shape[0] / 2)]))
+        if w1[i] - w2[i] > 0:
+            w2_new.append(int(w2[i] + flow[i]))
+        else:
+            w2_new.append(int(w2[i] - flow[i]))
 
     # setting up restrictions
-    zeros = np.zeros(len(flow), dtype=int)
+    zeros = np.zeros(len(flow))
 
     Sf = 0
     for num in flow:
@@ -68,7 +73,7 @@ def emd(image1, image2, cluster_dim):
 
     # Sf = w1i and Sf = w2i'
     Aeq = Aub + Aub
-    Beq = w1 + w2 # w2 '
+    Beq = w1 + w2_new
 
     # solving linear problem with simplex
     res = optimize.linprog(
@@ -77,9 +82,11 @@ def emd(image1, image2, cluster_dim):
         b_ub=[Bub],
         A_eq=np.array(Aeq),
         b_eq=[Beq],
-        bounds=(0, None),
-        method='simplex'
-    )
+        method='simplex')
+
+    if not res.success:
+        print(res.message)
+        return -1
 
     return res.fun
 
